@@ -1,0 +1,1726 @@
+### 登录 //完成
+实现登录功能，检查用户名和登录密码是否和传入参数一致
+
+URL:
+> [/login]  
+
+接口示例   
+(http://localhost:8888/login?username=1234&password=1111&loginType=1)  
+
+返回结果:  
+```
+{  
+    "code": 1,  
+    "msg": "登录成功",  
+}
+```
+
+请求参数:
+|参数|必选|类型|说明|  
+|----|  ----|  ----|  ----|
+|username    |ture    |string   |登录的用户名                               |  
+|password    |ture    |string   |登录的密码                                 |  
+|loginType   |true    |string   |1:普通用户登录 2:服务人员登录 3:管理员登录   |  
+
+返回字段:
+ |返回字段|字段类型|说明|  
+ |----|  ----|  ----|
+|code   |int    |返回结果状态。0：登录失败；1：登录成功。   |  
+|msg    |string |返回登录信息，例如没有该用户，请注册       |
+
+### 注册 //完成
+注册普通用户
+
+URL:
+> [/signup]  
+
+接口示例:  
+(http://localhost:8888/signup?username=1234&password=1111)  
+
+返回结果:  
+```
+{  
+    "code": 0,  
+    "msg": "当前用户名已经注册",  
+}
+```
+
+请求参数:  
+|参数|必选|类型|说明|  
+|----|  ----|  ----|  ----|  
+|username    |ture    |string   |登录的用户名                               |  
+|password    |ture    |string   |登录的密码                                 |    
+    
+返回字段:  
+|返回字段|字段类型|说明|  
+|----|  ----|  ----| 
+|code   |int    |返回结果状态。0：注册失败；1：注册成功。   |  
+|msg    |string |返回登录信息，例如注册成功       |
+
+### 返回房型信息 //完成
+URL:  
+>'/get_room_Imf'  
+
+接口示例:  
+(http://localhost:8888/get_room_Imf)
+ 
+返回结果:
+``` 
+{  
+    'code':1,
+    'data': [  
+        {
+            'room_id':'1'
+            'room_type':'单人房',
+            'room_intro':'这是一间单人房'
+        },
+        {
+            'room_id':'2'
+            'room_type':'双人房',
+            'room_intro':'这是一间双人房'
+        }
+    ]
+}
+```
+请求参数:无  
+
+返回字段:  
+|返回字段|字段类型|说明|  
+|----|  ----|  ----| 
+|code   |int    |返回结果状态。0：失败；1：成功。   |  
+|data   |对象数组 |返回房间信息，如返回结果所示      |
+
+### 更新用户信息 //完成
+
+更新用户信息
+
+URL:
+> [/updata_user_Imf]  
+
+接口示例:  
+(http://localhost:8888/updata_user_Imf?username=1234&name=adwsadw&id_number=430426123456783456&age=18&certificate_type=身份证&sex=男&phoneNumber=15307834681&email=1985759001@qq.com&password=1111)  
+
+返回结果:  
+```
+{  
+    "code": 1,  
+    "msg": "更改成功",  
+}
+```
+
+请求参数:  
+|参数|必选|类型|说明|  
+|----|  ----|  ----|  ----|  
+|username             |ture    |string   |登录的用户名                               |  
+|name                 |ture    |string   |真实姓名                                   |    
+|id_number            |ture    |string   |证件号码                                   |  
+|age                  |ture    |int
+|certificate_type     |ture    |string   |证件类型                                   |    
+|sex                  |ture    |string   |性别                                       |  
+|phoneNumber          |ture    |string   |手机号码                                   |    
+|email                |ture    |string   |电子邮件                                   |  
+|password             |ture    |string   |登陆密码                                   |    
+
+    
+返回字段:  
+|返回字段|字段类型|说明|  
+|----|  ----|  ----| 
+|code   |int    |返回结果状态。0：更改失败；1：更改成功。   |  
+|msg    |string |返回登录信息，例如更改成功       |
+
+### 返回接送形式 //完成
+返回接送形式
+
+URL:
+> [/get_meet_type]  
+
+接口示例:  
+(http://localhost:8888/get_meet_type)  
+
+返回结果:  
+```
+{  
+    "code": 1,  
+    "msg":"成功",
+    "data":[  
+        {
+            'meet_id':'1'
+            'meet_type':'普通接送',
+            'meet_price':'123',
+            'meet_intro':'这是普通接送'
+        },
+        {
+            'meet_id':'2'
+            'meet_type':'豪华接送',
+            'meet_price':'123',
+            'meet_intro':'这是豪华接送'
+        }
+    ]
+}
+```
+
+请求参数:  
+不需要请求参数
+
+    
+返回字段:  
+|返回字段|字段类型|说明|  
+|----|  ----|  ----| 
+|code   |int    |返回结果状态。0：更改失败；1：更改成功。   |  
+|data   |string |返回接送信息        |
+
+### 创建预约订单 //完成
+根据传入参数，查找是否有空余房间，如果有剩余房间，更改预约表，写入定金信息，修改订单信息，如果没有剩余房间，返回订单生成失败
+
+URL:
+> [/add_new_order]  
+
+接口示例:  
+(http://localhost:8888/add_new_order?username=1234&password=1111&room_type=单人房&check_in=2024-5-18&check_out=2024-5-19)  
+
+返回成功结果:  
+```
+{  
+    "code": 1,  
+    "msg": "预约成功", 
+    "data":{
+        'order_id':'234567897654',
+        'username':'1234',
+        'room_type':'双人房',
+        'certificate_id':'430426---------',
+        'check_in':'1232',
+        'check_out':'1234',
+        'deposit':'234',
+    } 
+}
+```
+
+返回失败结果:
+```
+{  
+    "code": 0,  
+    "msg": "剩余房间不足", 
+    "data":null,
+}
+```
+
+请求参数:  
+|参数|必选|类型|说明|  
+|----|  ----|  ----|  ----|  
+|username             |ture    |string   |登录的用户名                               |  
+|password             |ture    |string   |登陆密码                                   | 
+|room_type            |ture    |string   |预定房型代码                               |       
+|check_in             |ture    |string   |预计入住日期                               |  
+|check_out            |ture    |string   |预计退房日期                               |   
+
+    
+返回字段:  
+|返回字段|字段类型|说明|  
+|----|  ----|  ----| 
+|code          |int    |返回结果状态。0：预约失败；1：预约成功。   |  
+|msg           |string |返回登录信息，例如预约成功                |
+|data          |对象数组|其中返回信息如成功返回信息所示            |
+|order_id      |string |订单编号                                |
+|username      |string |用户名                                  |
+|room_type     |string |房型类型                                    |
+|certificate_id|string |订单编号                                |
+|check_in      |date   |预计入住信息                             |
+|check_out     |date   |预计退房信息                             |
+|deposit       |float  |定金                                    |
+
+### 定金支付 //完成
+直接修改费用支付状态
+
+URL:
+> [/pay_order]  
+
+接口示例:  
+(http://localhost:8888/pay_order?username=1234&password=1111&order_id=SwRKnMUIqE38)  
+
+返回成功结果:  
+```
+{  
+    "code": 1,  
+    "msg": "更改成功", 
+}
+```
+
+
+请求参数:  
+|参数|必选|类型|说明|  
+|----|  ----|  ----|  ----|  
+|username             |ture    |string   |登录的用户名                               |  
+|password             |ture    |string   |登陆密码                                   | 
+|order_id             |ture    |string   |订单编号                               |       
+   
+
+    
+返回字段:  
+|返回字段|字段类型|说明|  
+|----|  ----|  ----| 
+|code          |int    |返回结果状态。0：预约失败；1：预约成功。   |  
+|msg           |string |返回登录信息，例如更改成功                |
+
+### 获取用户信息填写状态 //完成
+URL:
+> [/get_userInf_complete]  
+返回用户信息是否填写完成
+
+接口示例:  
+(http://localhost:8888/get_userInf_complete?username=1234&password=1111)  
+
+返回成功结果:  
+```
+{  
+    "code": 1,  
+    "msg": "填写完成", 
+}
+```
+
+
+请求参数:  
+|参数|必选|类型|说明|  
+|----|  ----|  ----|  ----|  
+|username             |ture    |string   |登录的用户名                               |  
+|password             |ture    |string   |登陆密码                                   | 
+   
+
+    
+返回字段:  
+|返回字段|字段类型|说明|  
+|----|  ----|  ----| 
+|code          |int    |返回结果状态。0：未填写完成 1：填写完成。  |  
+|msg           |string |返回填写状态，例如填写完成                |
+
+### 删除订单 //完成
+如果用户预约的订单没有进行入住登记，则用户可以删除该预约的订单
+> [/remove_order]
+
+ 接口示例:  
+(http://localhost:8888/remove_order?username=1234&password=1111&order_id=SwRKnMUIqE38)
+
+
+返回成功结果:  
+```
+{  
+    "code": 1,  
+    "msg": "删除成功", 
+}
+```
+
+请求参数:  
+|参数|必选|类型|说明|  
+|----|  ----|  ----|  ----|  
+|username             |ture    |string   |登录的用户名                               |  
+|password             |ture    |string   |登陆密码                                   | 
+|order_id             |ture    |string   |订单编号                                   | 
+
+    
+返回字段:  
+|返回字段|字段类型|说明|  
+|----|  ----|  ----| 
+|code          |int    |返回结果状态。0：删除未成功 1：删除成功  |  
+|msg           |string |返回填写状态，例如删除成功，或者删除失败，该订单已经入住                |
+
+### 返回房型介绍图片 //完成
+返回房型介绍图片
+> [/get_room_picture]
+
+ 接口示例:  
+(http://localhost:8888/get_room_picture?room_id=1)
+
+
+
+请求参数:  
+|参数|必选|类型|说明|  
+|----|  ----|  ----|  ----|  
+|room_id             |ture    |string   |房型id                                   |
+
+### 返回菜品信息 //完成
+返回菜品介绍信息
+
+URL:
+> [/get_menu]  
+
+接口示例:  
+(http://localhost:8888/get_menu)  
+
+返回成功结果:  
+``` 
+{  
+    'code':1,
+    'msg':'返回成功'
+    'data': [  
+        {
+            'dish_id':'1'
+            'dish_type':'中餐，晚餐',
+            'dish_intro':'这是辣子鸡',
+            'dish_name':'辣子鸡',
+            'dish_taste':'辣'
+        },
+        {
+            'dish_id':'2'
+            'dish_type':'中餐，晚餐',
+            'dish_intro':'这是叉烧',
+            'dish_name':'叉烧',
+            'dish_taste':'甜'
+        },
+    ]
+}
+```
+
+请求参数:  不需要参数
+
+    
+返回字段:  
+|返回字段|字段类型|说明|  
+|----|  ----|  ----| 
+|code          |int    |返回结果状态。0：返回失败；1：返回成功。   |  
+|msg           |string |例如返回成功                             |
+|data          |对象数组|其中返回信息如成功返回信息所示            |
+
+### 返回菜品介绍图片 //完成
+返回房型介绍图片
+> [/get_dish_picture]
+
+ 接口示例:  
+(http://localhost:8888/get_dish_picture?dish_id=1)
+
+
+
+请求参数:  
+|参数|必选|类型|说明|  
+|----|  ----|  ----|  ----|  
+|dish_id           |ture    |string   |菜品id                                   | 
+
+### 创建食品订单 //完成
+
+根据传入参数创建食品订单
+
+> [/add_food_order]
+
+**接口示例:**
+```
+http://localhost:8888/add_food_order?username=1234&password=1111&dish_id=1&delivery_time=2024-5-29T12:00:00&quantity=2&taste=中辣
+```
+
+**返回成功结果:**
+```json
+{
+    "code": 1,
+    "msg": "订单创建成功",
+    "data": {
+        "order_id": "FO123456789",
+        "username": "1234",
+        "dish_id": "1",
+        "quantity": 2,
+        "total_price": 50.00
+    }
+}
+```
+
+**返回失败结果:**
+```json
+{
+    "code": 0,
+    "msg": "订单创建失败",
+    "data": null
+}
+```
+
+**请求参数:**
+| 参数     | 必选 | 类型   | 说明       |
+| -------- | ---- | ------ | ---------- |
+| username | true | string | 登录的用户名 |
+| password | true | string | 登录密码     |
+| dish_id  | true | string | 菜品ID      |
+| delivery_time | true | time |送餐时间|
+| quantity | true | int    | 订购数量     |
+| taste | true | string | 口味 |
+
+**返回字段:**
+| 返回字段   | 字段类型 | 说明                         |
+| ---------- | -------- | ---------------------------- |
+| code       | int      | 返回结果状态。0：失败；1：成功 |
+| msg        | string   | 返回信息                     |
+| data       | 对象     | 订单详细信息（见成功示例）   |
+| order_id   | string   | 订单编号                     |
+| username   | string   | 用户名                       |
+| dish_id    | string   | 菜品ID                       |
+| quantity   | int      | 订购数量                     |
+| total_price| float    | 总价                         |
+
+### 创建接站订单 //完成
+
+根据传入参数创建接送订单
+
+**URL:**
+> [/add_meet_order]
+
+**接口示例:**
+```
+http://localhost:8888/add_meet_order?username=1234&password=1111&meet_id=1&meet_time=2024-05-30T10:00:00&location=机场
+```
+
+**返回成功结果:**
+```json
+{
+    "code": 1,
+    "msg": "接站订单创建成功",
+    "data": {
+        "order_id": "MO123456789",
+        "username": "1234",
+        "meet_id": "1",
+        "meet_time": "2024-05-30T10:00:00",
+        "location": "机场",
+        "meet_type": "普通接送",
+        "meet_price": 123.00
+    }
+}
+```
+
+**返回失败结果:**
+```json
+{
+    "code": 0,
+    "msg": "接站订单创建失败",
+    "data": null
+}
+```
+
+**请求参数:**
+| 参数      | 必选 | 类型   | 说明                         |
+| --------- | ---- | ------ | ---------------------------- |
+| username  | true | string | 登录的用户名                   |
+| password  | true | string | 登录密码                       |
+| meet_id   | true | string | 接送类型ID                     |
+| meet_time | true | string | 接送时间（ISO8601格式）         |
+| location  | true | string | 接送地点                       |
+
+**返回字段:**
+| 返回字段  | 字段类型 | 说明                              |
+| --------- | -------- | --------------------------------- |
+| code      | int      | 返回结果状态。0：失败；1：成功     |
+| msg       | string   | 返回信息                          |
+| data      | 对象     | 订单详细信息（见成功示例）        |
+| order_id  | string   | 订单编号                          |
+| username  | string   | 用户名                            |
+| meet_id   | string   | 接送类型ID                        |
+| meet_time | string   | 接送时间                          |
+| location  | string   | 接送地点                          |
+| meet_type | string   | 接送形式                          |
+| meet_price| float    | 接送费用                          |
+
+### 创建送站订单  //完成
+
+根据传入参数创建接送订单
+
+**URL:**
+> [/add_send_order]
+
+**接口示例:**
+```
+http://localhost:8888/add_send_order?username=1234&password=1111&meet_id=1&meet_time=2024-05-30T10:00:00&location=机场
+```
+
+**返回成功结果:**
+```json
+{
+    "code": 1,
+    "msg": "送站订单创建成功",
+    "data": {
+        "order_id": "MO123456789",
+        "username": "1234",
+        "meet_id": "1",
+        "meet_time": "2024-05-30T10:00:00",
+        "location": "机场",
+        "meet_type": "普通接送",
+        "meet_price": 123.00
+    }
+}
+```
+
+**返回失败结果:**
+```json
+{
+    "code": 0,
+    "msg": "送站订单创建失败",
+    "data": null
+}
+```
+
+**请求参数:**
+| 参数      | 必选 | 类型   | 说明                         |
+| --------- | ---- | ------ | ---------------------------- |
+| username  | true | string | 登录的用户名                   |
+| password  | true | string | 登录密码                       |
+| meet_id   | true | string | 接送类型ID                     |
+| meet_time | true | string | 接送时间（ISO8601格式）         |
+| location  | true | string | 接送地点                       |
+
+**返回字段:**
+| 返回字段  | 字段类型 | 说明                              |
+| --------- | -------- | --------------------------------- |
+| code      | int      | 返回结果状态。0：失败；1：成功     |
+| msg       | string   | 返回信息                          |
+| data      | 对象     | 订单详细信息（见成功示例）        |
+| order_id  | string   | 订单编号                          |
+| username  | string   | 用户名                            |
+| meet_id   | string   | 接送类型ID                        |
+| meet_time | string   | 接送时间                          |
+| location  | string   | 接送地点                          |
+| meet_type | string   | 接送形式                          |
+| meet_price| float    | 接送费用                          |
+
+### 获取用户所有订单 //完成
+
+根据传入参数获取用户的所有订单
+
+**URL:**
+> [/get_user_orders]
+
+**接口示例:**
+```
+http://localhost:8888/get_user_orders?username=12345678&password=12345678
+```
+
+**返回成功结果:**
+```json
+{
+    "code": 1,
+    "msg": "获取订单成功",
+    "data": [
+        {
+            "order_id": "RO123456789",
+            "order_type": "房间订单",
+            "details": {
+                "room_type": "单人房",
+                "check_in": "2024-05-18",
+                "check_out": "2024-05-19",
+                "deposit": 200.00,
+                "支付状态": "已支付"
+            }
+        },
+        {
+            "order_id": "FO987654321",
+            "order_type": "食品订单",
+            "details": {
+                "dish_id": "1",
+                "dish_name": "辣子鸡",
+                "quantity": 2,
+                "total_price": 50.00
+            }
+        },
+        {
+            "order_id": "MO123456789",
+            "order_type": "接送订单",
+            "details": {
+                "meet_id": "1",
+                "meet_type": "普通接送",
+                "meet_time": "2024-05-30T10:00:00",
+                "location": "机场",
+                "meet_price": 123.00
+            }
+        }
+    ]
+}
+```
+
+**返回失败结果:**
+```json
+{
+    "code": 0,
+    "msg": "获取订单失败",
+    "data": null
+}
+```
+
+**请求参数:**
+| 参数     | 必选 | 类型   | 说明       |
+| -------- | ---- | ------ | ---------- |
+| username | true | string | 登录的用户名 |
+| password | true | string | 登录密码     |
+
+**返回字段:**
+| 返回字段  | 字段类型 | 说明                              |
+| --------- | -------- | --------------------------------- |
+| code      | int      | 返回结果状态。0：失败；1：成功     |
+| msg       | string   | 返回信息                          |
+| data      | 对象数组 | 订单详细信息数组（见成功示例）    |
+| order_id  | string   | 订单编号                          |
+| order_type| string   | 订单类型（房间订单/食品订单/接送订单）|
+| details   | 对象     | 订单具体详情，根据订单类型而不同  | //
+
+### 完成接送订单//完成
+
+URL:
+> [/Complete_meet_order]  
+
+接口示例:  
+(http://localhost:8888/Complete_meet_order?order_id=123456789012&order_type=接&username=service_user&password=service_pass)
+
+请求参数:  
+| 参数 | 必选 | 类型 | 说明 |  
+| ---- | ---- | ---- | ---- |  
+| order_id | true | string | 需要完成的接送订单编号 |  
+| order_type | true | string | 接或送 |  
+| username | true | string | 服务员登录的用户名 |  
+| password | true | string | 服务员登录的密码 |
+
+返回结果:  
+```json
+{  
+    "code": 1,  
+    "msg": "完成成功",  
+    "data": null
+}
+```
+
+返回字段:  
+| 返回字段 | 字段类型 | 说明 |  
+| ---- | ---- | ---- |  
+| code | int | 返回结果状态。0：完成失败；1：完成成功。 |  
+| msg | string | 返回完成信息，例如完成成功。 |  
+| data | null | 返回数据为空。 |
+
+接口说明
+该接口用于完成指定的接送订单。传入需要完成的接送订单编号以及服务员的用户名和密码，验证通过后完成对应的接送订单。
+
+请求示例
+```
+GET /complete_meet_order?order_id=123456789012&username=service_user&password=service_pass HTTP/1.1
+Host: localhost:8888
+```
+
+返回示例
+成功返回:
+```json
+{  
+    "code": 1,  
+    "msg": "完成成功",  
+    "data": null
+}
+```
+
+失败返回:
+```json
+{  
+    "code": 0,  
+    "msg": "完成失败，订单不存在或权限不足",  
+    "data": null
+}
+```
+
+注意事项
+- 验证服务员用户名和密码是否正确，若验证失败，返回`code: 0`和相应的错误信息。
+- 若订单编号不存在或服务员权限不足以完成该订单，返回相应的错误信息。
+
+### 完成餐品订单 //完成
+
+URL:
+> [/complete_food_order]  
+
+接口示例:  
+(http://localhost:8888/Complete_food_order?order_id=123456789012&username=service_user&password=service_pass)
+
+请求参数:  
+| 参数 | 必选 | 类型 | 说明 |  
+| ---- | ---- | ---- | ---- |  
+| order_id | true | string | 需要完成的餐品订单编号 |  
+| username | true | string | 服务员登录的用户名 |  
+| password | true | string | 服务员登录的密码 |
+
+返回结果:  
+```json
+{  
+    "code": 1,  
+    "msg": "完成成功",  
+    "data": null
+}
+```
+
+返回字段:  
+| 返回字段 | 字段类型 | 说明 |  
+| ---- | ---- | ---- |  
+| code | int | 返回结果状态。0：完成失败；1：完成成功。 |  
+| msg | string | 返回完成信息，例如完成成功。 |  
+| data | null | 返回数据为空。 |
+
+接口说明
+该接口用于完成指定的餐品订单。传入需要完成的餐品订单编号以及服务员的用户名和密码，验证通过后完成对应的餐品订单。
+
+请求示例
+```
+GET /complete_food_order?order_id=123456789012&username=service_user&password=service_pass HTTP/1.1
+Host: localhost:8888
+```
+
+返回示例
+成功返回:
+```json
+{  
+    "code": 1,  
+    "msg": "完成成功",  
+    "data": null
+}
+```
+
+失败返回:
+```json
+{  
+    "code": 0,  
+    "msg": "完成失败，订单不存在或权限不足",  
+    "data": null
+}
+```
+
+注意事项
+- 验证服务员用户名和密码是否正确，若验证失败，返回`code: 0`和相应的错误信息。
+- 若订单编号不存在或服务员权限不足以完成该订单，返回相应的错误信息。 //完成
+
+### 入住登记 //完成
+根据传入参数进行入住登记
+
+**URL:**
+> [/check_in]
+
+**接口示例:**
+```
+http://localhost:8888/check_in?username=1234&password=1111&order_id=RO123456789&room_id=101&id_number=430426123456783456&name=张三&check_in_date=2024-05-30&deposit=200.00&expected_check_out_date=2024-06-05
+```
+
+**返回成功结果:**
+```json
+{
+    "code": 1,
+    "msg": "入住登记成功"
+}
+```
+
+**返回失败结果:**
+```json
+{
+    "code": 0,
+    "msg": "入住登记失败"
+}
+```
+
+**请求参数:**
+| 参数                   | 必选 | 类型   | 说明         |
+| ---------------------- | ---- | ------ | ------------ |
+| username               | true | string | 服务员用户名   |
+| password               | true | string | 服务员密码     |
+| order_id               | true | string | 订单编号       |
+| room_id                | true | string | 房间号         |
+| id_number              | true | string | 证件号码       |
+| name                   | true | string | 姓名           |
+| check_in_date          | true | string | 入住日期       |
+| deposit                | true | float  | 押金           |
+| expected_check_out_date| true | string | 预计离开日期   |
+
+**返回字段:**
+| 返回字段 | 字段类型 | 说明                          |
+| -------- | -------- | ----------------------------- |
+| code     | int      | 返回结果状态。0：失败；1：成功 |
+| msg      | string   | 返回信息                      |
+
+### 退房登记 //完成
+
+服务人员进行退房登记操作
+
+**URL:**
+> [/check_out]
+
+**接口示例:**
+```
+http://localhost:8888/check_out?username=staff123&password=staffpwd&checkout_date=2024-05-31&damage_fee=50.00&damage_description=窗帘损坏&order_id=RO123456789
+
+```
+
+**请求参数:**
+| 参数                  | 必选 | 类型    | 说明             |
+| --------------------- | ---- | ------- | ---------------- |
+| username              | true | string  | 服务人员用户名   |
+| password              | true | string  | 服务人员密码     |
+| checkout_date         | true | string  | 退房日期         |
+| damage_fee            | true | float   | 损坏费用         |
+| damage_description    | true | string  | 损坏情况描述     |
+| order_id              | true | string  | 订单编号         |
+
+**返回字段:**
+| 返回字段 | 字段类型 | 说明                          |
+| -------- | -------- | ----------------------------- |
+| code     | int      | 返回结果状态。0：失败；1：成功 |
+| msg      | string   | 返回信息                      |
+
+**返回示例:**
+```json
+{
+    "code": 1,
+    "msg": "退房登记成功"
+}
+```
+
+```json
+{
+    "code": 0,
+    "msg": "退房登记失败"
+}
+```
+
+**备注:**
+- 服务人员在进行退房登记操作时需要提供正确的用户名和密码进行身份验证。
+
+### 支付所有金额 //完成
+
+根据传入参数支付所有未结算的金额
+
+**URL:**
+> [/pay_all_amounts]
+
+**接口示例:**
+```
+http://localhost:8888/pay_all_amounts?username=1234&password=1111&order_id=RO123456789
+```
+
+**返回成功结果:**
+```json
+{
+    "code": 1,
+    "msg": "支付成功"
+}
+```
+
+**返回失败结果:**
+```json
+{
+    "code": 0,
+    "msg": "支付失败"
+}
+```
+
+**请求参数:**
+| 参数     | 必选 | 类型   | 说明       |
+| -------- | ---- | ------ | ---------- |
+| username | true | string | 登录的用户名 |
+| password | true | string | 登录密码     |
+| order_id | true | string | 订单编号     |
+
+**返回字段:**
+| 返回字段 | 字段类型 | 说明                          |
+| -------- | -------- | ----------------------------- |
+| code     | int      | 返回结果状态。0：失败；1：成功 |
+| msg      | string   | 返回信息                      |
+
+### 管理员数据库操作 //完成
+根据传入参数进行管理员数据库操作（直接执行SQL语句）
+
+**URL:**
+> [/admin_db_operations]
+
+**接口示例:**
+```
+http://localhost:8888/admin_db_operations?admin_username=admin&admin_password=admin123&sql_statement=SELECT * FROM rooms
+```
+
+**返回成功结果:**
+```json
+{
+    "code": 1,
+    "msg": "操作成功",
+    "data": [
+        {
+            "room_id": "1",
+            "room_type": "单人房",
+            "room_intro": "这是一间单人房"
+        },
+        {
+            "room_id": "2",
+            "room_type": "双人房",
+            "room_intro": "这是一间双人房"
+        }
+    ]
+}
+```
+
+**返回失败结果:**
+```json
+{
+    "code": 0,
+    "msg": "操作失败",
+    "data": null
+}
+```
+
+**请求参数:**
+| 参数           | 必选 | 类型   | 说明                             |
+| -------------- | ---- | ------ | -------------------------------- |
+| admin_username | true | string | 管理员用户名                      |
+| admin_password | true | string | 管理员密码                        |
+| sql_statement  | true | string | SQL语句                          |
+
+**返回字段:**
+| 返回字段 | 字段类型 | 说明                          |
+| -------- | -------- | ----------------------------- |
+| code     | int      | 返回结果状态。0：失败；1：成功 |
+| msg      | string   | 返回信息                      |
+| data     | 对象数组 | 查询结果（仅当执行查询语句时返回） |
+
+**操作示例:**
+- **执行查询语句**
+  ```
+  http://localhost:8888/admin_db_operations?admin_username=admin&admin_password=admin123&sql_statement=SELECT * FROM rooms
+  ```
+
+- **执行更新语句**
+  ```
+  http://localhost:8888/admin_db_operations?admin_username=admin&admin_password=admin123&sql_statement=UPDATE rooms SET room_intro='这是重新装修的单人房' WHERE room_id='1'
+  ```
+
+- **执行插入语句**
+  ```
+  http://localhost:8888/admin_db_operations?admin_username=admin&admin_password=admin123&sql_statement=INSERT INTO rooms (room_id, room_type, room_intro) VALUES ('3', '豪华套房', '这是豪华套房')
+  ```
+
+- **执行删除语句**
+  ```
+  http://localhost:8888/admin_db_operations?admin_username=admin&admin_password=admin123&sql_statement=DELETE FROM rooms WHERE room_id='3'
+  ``
+
+### 获取传入日期内需要入住的订单 //完成
+
+URL:
+> [/get_checkin_orders]  
+
+接口示例:  
+(http://localhost:8888/get_checkin_orders?date=2024-05-18&username=service_user&password=service_pass)
+
+请求参数:  
+| 参数 | 必选 | 类型 | 说明 |  
+| ---- | ---- | ---- | ---- |  
+| date | true | string | 需要查询的日期，格式为YYYY-MM-DD |  
+| username | true | string | 服务员登录的用户名 |  
+| password | true | string | 服务员登录的密码 |
+
+返回结果:  
+```json
+{  
+    "code": 1,  
+    "msg": "查询成功",  
+    "data": [
+        {
+            "order_id": "234567897654",
+            "username": "1234",
+            "room_type": "双人房",
+            "check_in": "2024-05-18",
+            "check_out": "2024-05-19"
+        },
+        {
+            "order_id": "345678987654",
+            "username": "5678",
+            "room_type": "单人房",
+            "check_in": "2024-05-18",
+            "check_out": "2024-05-20"
+        }
+    ]
+}
+```
+
+返回字段:  
+| 返回字段 | 字段类型 | 说明 |  
+| ---- | ---- | ---- |  
+| code | int | 返回结果状态。0：查询失败；1：查询成功。 |  
+| msg | string | 返回查询信息，例如查询成功。 |  
+| data | 对象数组 | 返回订单信息数组，包含需要入住的订单信息。 |  
+| order_id | string | 订单编号 |  
+| username | string | 用户名 |  
+| room_type | string | 房型类型 |  
+| check_in | string | 预计入住日期 |  
+| check_out | string | 预计退房日期 |
+
+接口说明
+该接口用于获取指定日期内需要入住的订单信息。传入查询日期以及服务员的用户名和密码，验证通过后返回在该日期需要入住的所有订单的详细信息，包括订单编号、用户名、房型、预计入住和退房日期。
+
+请求示例
+```
+GET /get_checkin_orders?date=2024-05-18&username=service_user&password=service_pass HTTP/1.1
+Host: localhost:8888
+```
+
+返回示例
+成功返回:
+```json
+{  
+    "code": 1,  
+    "msg": "查询成功",  
+    "data": [
+        {
+            "order_id": "234567897654",
+            "username": "1234",
+            "room_type": "双人房",
+            "check_in": "2024-05-18",
+            "check_out": "2024-05-19"
+        },
+        {
+            "order_id": "345678987654",
+            "username": "5678",
+            "room_type": "单人房",
+            "check_in": "2024-05-18",
+            "check_out": "2024-05-20"
+        }
+    ]
+}
+```
+
+失败返回:
+```json
+{  
+    "code": 0,  
+    "msg": "查询失败",  
+    "data": null
+}
+```
+
+注意事项
+- 确保传入的日期格式为YYYY-MM-DD。
+- 如果没有需要入住的订单，返回的`data`字段应为空数组。
+- 验证服务员用户名和密码是否正确，若验证失败，返回`code: 0`和相应的错误信息。
+
+### 获取传入日期内需要退房的订单 //完成
+
+URL:
+> [/get_checkout_orders]  
+
+接口示例:  
+(http://localhost:8888/get_checkout_orders?date=2024-05-19&username=service_user&password=service_pass)
+
+请求参数:  
+| 参数 | 必选 | 类型 | 说明 |  
+| ---- | ---- | ---- | ---- |  
+| date | true | string | 需要查询的日期，格式为YYYY-MM-DD |  
+| username | true | string | 服务员登录的用户名 |  
+| password | true | string | 服务员登录的密码 |
+
+返回结果:  
+```json
+{  
+    "code": 1,  
+    "msg": "查询成功",  
+    "data": [
+        {
+            "order_id": "234567897654",
+            "username": "1234",
+            "room_type": "双人房",
+            "check_in": "2024-05-18",
+            "check_out": "2024-05-19"
+        },
+        {
+            "order_id": "345678987654",
+            "username": "5678",
+            "room_type": "单人房",
+            "check_in": "2024-05-18",
+            "check_out": "2024-05-19"
+        }
+    ]
+}
+```
+
+返回字段:  
+| 返回字段 | 字段类型 | 说明 |  
+| ---- | ---- | ---- |  
+| code | int | 返回结果状态。0：查询失败；1：查询成功。 |  
+| msg | string | 返回查询信息，例如查询成功。 |  
+| data | 对象数组 | 返回订单信息数组，包含需要退房的订单信息。 |  
+| order_id | string | 订单编号 |  
+| username | string | 用户名 |  
+| room_type | string | 房型类型 |  
+| check_in | string | 预计入住日期 |  
+| check_out | string | 预计退房日期 |
+
+接口说明
+该接口用于获取指定日期内需要退房的订单信息。传入查询日期以及服务员的用户名和密码，验证通过后返回在该日期需要退房的所有订单的详细信息，包括订单编号、用户名、房型、预计入住和退房日期。
+
+请求示例
+```
+GET /get_checkout_orders?date=2024-05-19&username=service_user&password=service_pass HTTP/1.1
+Host: localhost:8888
+```
+
+返回示例
+成功返回:
+```json
+{  
+    "code": 1,  
+    "msg": "查询成功",  
+    "data": [
+        {
+            "order_id": "234567897654",
+            "username": "1234",
+            "room_type": "双人房",
+            "check_in": "2024-05-18",
+            "check_out": "2024-05-19"
+        },
+        {
+            "order_id": "345678987654",
+            "username": "5678",
+            "room_type": "单人房",
+            "check_in": "2024-05-18",
+            "check_out": "2024-05-19"
+        }
+    ]
+}
+```
+
+失败返回:
+```json
+{  
+    "code": 0,  
+    "msg": "查询失败",  
+    "data": null
+}
+```
+注意事项
+- 确保传入的日期格式为YYYY-MM-DD。
+- 如果没有需要退房的订单，返回的`data`字段应为空数组。
+- 验证服务员用户名和密码是否正确，若验证失败，返回`code: 0`和相应的错误信息。
+
+### 获取传入日期内需要完成的接送订单
+
+URL:
+> [/get_meet_orders]  
+
+接口示例:  
+(http://localhost:8888/get_meet_orders?date=2024-05-19&username=service_user&password=service_pass)
+
+请求参数:  
+| 参数 | 必选 | 类型 | 说明 |  
+| ---- | ---- | ---- | ---- |  
+| date | true | string | 需要查询的日期，格式为YYYY-MM-DD |  
+| username | true | string | 服务员登录的用户名 |  
+| password | true | string | 服务员登录的密码 |
+
+返回结果:  
+```json
+{  
+    "code": 1,  
+    "msg": "查询成功",  
+    "data": [
+        {
+            "order_id": "567890123456",
+            "username": "1234",
+            "meet_type": "普通接送",
+            "meet_date": "2024-05-19",
+            "meet_time": "10:00",
+            "meet_location": "机场",
+            "meet_action": "接站"
+        },
+        {
+            "order_id": "678901234567",
+            "username": "5678",
+            "meet_type": "豪华接送",
+            "meet_date": "2024-05-19",
+            "meet_time": "14:00",
+            "meet_location": "车站",
+            "meet_action": "送站"
+        }
+    ]
+}
+```
+
+返回字段:  
+| 返回字段 | 字段类型 | 说明 |  
+| ---- | ---- | ---- |  
+| code | int | 返回结果状态。0：查询失败；1：查询成功。 |  
+| msg | string | 返回查询信息，例如查询成功。 |  
+| data | 对象数组 | 返回接送订单信息数组，包含需要完成的接送订单信息。 |  
+| order_id | string | 订单编号 |  
+| username | string | 用户名 |  
+| meet_type | string | 接送类型 |  
+| meet_date | string | 接送日期 |  
+| meet_time | string | 接送时间 |  
+| meet_location | string | 接送地点 |  
+| meet_action | string | 接站或送站类型 |  
+
+接口说明
+该接口用于获取指定日期内需要完成的接送订单信息。传入查询日期以及服务员的用户名和密码，验证通过后返回在该日期需要完成的所有接送订单的详细信息，包括订单编号、用户名、接送类型、接送日期、接送时间、接送地点和接站或送站类型。
+
+请求示例
+```
+GET /get_meet_orders?date=2024-05-19&username=service_user&password=service_pass HTTP/1.1
+Host: localhost:8888
+```
+
+返回示例
+成功返回:
+```json
+{  
+    "code": 1,  
+    "msg": "查询成功",  
+    "data": [
+        {
+            "order_id": "567890123456",
+            "username": "1234",
+            "meet_type": "普通接送",
+            "meet_date": "2024-05-19",
+            "meet_time": "10:00",
+            "meet_location": "机场",
+            "meet_action": "接站"
+        },
+        {
+            "order_id": "678901234567",
+            "username": "5678",
+            "meet_type": "豪华接送",
+            "meet_date": "2024-05-19",
+            "meet_time": "14:00",
+            "meet_location": "车站",
+            "meet_action": "送站"
+        }
+    ]
+}
+```
+
+失败返回:
+```json
+{  
+    "code": 0,  
+    "msg": "查询失败",  
+    "data": null
+}
+```
+
+注意事项
+- 确保传入的日期格式为YYYY-MM-DD。
+- 如果没有需要完成的接送订单，返回的`data`字段应为空数组。
+- 验证服务员用户名和密码是否正确，若验证失败，返回`code: 0`和相应的错误信息。
+
+### 获取传入日期内需要完成的餐品订单
+
+URL:
+> [/get_food_orders]  
+
+接口示例:  
+(http://localhost:8888/get_food_orders?date=2024-05-19&username=service_user&password=service_pass)
+
+请求参数:  
+| 参数 | 必选 | 类型 | 说明 |  
+| ---- | ---- | ---- | ---- |  
+| date | true | string | 需要查询的日期，格式为YYYY-MM-DD |  
+| username | true | string | 服务员登录的用户名 |  
+| password | true | string | 服务员登录的密码 |
+
+返回结果:  
+```json
+{  
+    "code": 1,  
+    "msg": "查询成功",  
+    "data": [
+        {
+            "order_id": "123456789012",
+            "username": "1234",
+            "dish_name": "辣子鸡",
+            "dish_type": "中餐，晚餐",
+            "dish_taste": "辣",
+            "order_time": "2024-05-19 12:00",
+            "delivery_time": "2024-05-19 13:00"
+        },
+        {
+            "order_id": "234567890123",
+            "username": "5678",
+            "dish_name": "叉烧",
+            "dish_type": "中餐，晚餐",
+            "dish_taste": "甜",
+            "order_time": "2024-05-19 11:00",
+            "delivery_time": "2024-05-19 12:30"
+        }
+    ]
+}
+```
+
+返回字段:  
+| 返回字段 | 字段类型 | 说明 |  
+| ---- | ---- | ---- |  
+| code | int | 返回结果状态。0：查询失败；1：查询成功。 |  
+| msg | string | 返回查询信息，例如查询成功。 |  
+| data | 对象数组 | 返回餐品订单信息数组，包含需要完成的餐品订单信息。 |  
+| order_id | string | 订单编号 |  
+| username | string | 用户名 |  
+| dish_name | string | 菜品名称 |  
+| dish_type | string | 菜品类型 |  
+| dish_taste | string | 菜品口味 |  
+| order_time | string | 下单时间 |  
+| delivery_time | string | 送达时间 |
+
+接口说明
+该接口用于获取指定日期内需要完成的餐品订单信息。传入查询日期以及服务员的用户名和密码，验证通过后返回在该日期需要完成的所有餐品订单的详细信息，包括订单编号、用户名、菜品名称、菜品类型、菜品口味、下单时间和送达时间。
+
+请求示例
+```
+GET /get_food_orders?date=2024-05-19&username=service_user&password=service_pass HTTP/1.1
+Host: localhost:8888
+```
+
+返回示例
+成功返回:
+```json
+{  
+    "code": 1,  
+    "msg": "查询成功",  
+    "data": [
+        {
+            "order_id": "123456789012",
+            "username": "1234",
+            "dish_name": "辣子鸡",
+            "dish_type": "中餐，晚餐",
+            "dish_taste": "辣",
+            "order_time": "2024-05-19 12:00",
+            "delivery_time": "2024-05-19 13:00"
+        },
+        {
+            "order_id": "234567890123",
+            "username": "5678",
+            "dish_name": "叉烧",
+            "dish_type": "中餐，晚餐",
+            "dish_taste": "甜",
+            "order_time": "2024-05-19 11:00",
+            "delivery_time": "2024-05-19 12:30"
+        }
+    ]
+}
+```
+
+失败返回:
+```json
+{  
+    "code": 0,  
+    "msg": "查询失败",  
+    "data": null
+}
+```
+
+注意事项
+- 确保传入的日期格式为YYYY-MM-DD。
+- 如果没有需要完成的餐品订单，返回的`data`字段应为空数组。
+- 验证服务员用户名和密码是否正确，若验证失败，返回`code: 0`和相应的错误信息。
+
+### 获取指定房型空闲的房间编号 //完成
+
+URL:
+> [/get_available_rooms]
+
+接口示例:  
+(http://localhost:8888/get_available_rooms?username=service_user&password=service_pass&room_id=1)
+
+请求参数:  
+| 参数 | 必选 | 类型 | 说明 |  
+| ---- | ---- | ---- | ---- |  
+| username | true | string | 服务员登录的用户名 |  
+| password | true | string | 服务员登录的密码 |
+| room_id | true | string | 需要查询的房型id |
+
+返回结果:  
+```json
+{  
+    "code": 1,  
+    "msg": "查询成功",  
+    "data": ["101", "102", "103"]
+}
+```
+
+返回字段:  
+| 返回字段 | 字段类型 | 说明 |  
+| ---- | ---- | ---- |  
+| code | int | 返回结果状态。0：查询失败；1：查询成功。 |  
+| msg | string | 返回查询信息，例如查询成功。 |  
+| data | array | 返回空闲的房间编号数组。 |
+
+接口说明
+该接口用于查询指定房型在指定时间内空闲的房间编号。传入房型名称、入住日期和退房日期，返回该房型在指定时间内的空闲房间编号列表。
+
+请求示例
+```
+GET /get_available_rooms?room_type=单人房&check_in=2024-06-01&check_out=2024-06-03 HTTP/1.1
+Host: localhost:8888
+```
+
+返回示例
+成功返回:
+```json
+{  
+    "code": 1,  
+    "msg": "查询成功",  
+    "data": ["101", "102", "103"]
+}
+```
+
+失败返回:
+```json
+{  
+    "code": 0,  
+    "msg": "查询失败，指定时间内无空闲房间",  
+    "data": []
+}
+```
+
+注意事项
+- 确保传入的日期格式为YYYY-MM-DD。
+- 如果指定时间内没有空闲房间，返回的`data`字段为空数组。
+
+。 //
+
+### 服务员根据手机号码查询用户信息 //完成
+
+**URL:**
+> [/get_user_info_by_phone]
+
+**接口示例:**
+```
+GET http://localhost:8888/get_user_info_by_phone?username=staff123&password=staffpwd&phone=15307834681
+```
+
+**请求参数:**
+| 参数     | 必选 | 类型   | 说明           |
+| -------- | ---- | ------ | -------------- |
+| username | true | string | 服务人员用户名 |
+| password | true | string | 服务人员密码   |
+| phone    | true | string | 用户手机号码   |
+
+**返回字段:**
+| 返回字段 | 字段类型 | 说明                          |
+| -------- | -------- | ----------------------------- |
+| code     | int      | 返回结果状态。0：失败；1：成功 |
+| msg      | string   | 返回信息                      |
+| data     | 对象     | 用户信息对象                  |
+
+**返回示例:**
+```json
+{
+    "code": 1,
+    "msg": "查询成功",
+    "data": {
+        "username": "user123",
+        "name": "张三",
+        "id_number": "430426123456783456",
+        "age": 30,
+        "certificate_type": "身份证",
+        "sex": "男",
+        "phoneNumber": "15307834681",
+        "email": "user123@example.com"
+    }
+}
+```
+
+```json
+{
+    "code": 0,
+    "msg": "查询失败",
+    "data": null
+}
+```
+
+### 给服务员使用的订单删除接口 //完成
+
+服务员删除订单
+
+**URL:**
+> [/delete_order_by_staff]
+
+**接口示例:**
+```
+GET http://localhost:8888/delete_order_by_staff?username=staff123&password=staffpwd&order_id=RO123456789
+```
+
+**请求参数:**
+| 参数     | 必选 | 类型   | 说明           |
+| -------- | ---- | ------ | -------------- |
+| username | true | string | 服务人员用户名 |
+| password | true | string | 服务人员密码   |
+| order_id | true | string | 订单编号       |
+
+**返回字段:**
+| 返回字段 | 字段类型 | 说明                          |
+| -------- | -------- | ----------------------------- |
+| code     | int      | 返回结果状态。0：失败；1：成功 |
+| msg      | string   | 返回信息                      |
+
+**返回示例:**
+```json
+{
+    "code": 1,
+    "msg": "删除订单成功"
+}
+```
+
+```json
+{
+    "code": 0,
+    "msg": "删除订单失败"
+}
+```
+
+### 给用户使用的订单更改接口
+
+用户更改订单
+
+**URL:**
+> [/update_order_by_user]
+
+**接口示例:**
+```
+GET http://localhost:8888/update_order_by_user?username=user123&password=userpwd&order_id=RO123456789&check_in=2024-06-01&check_out=2024-06-10&new_room_type=双人房
+```
+
+**请求参数:**
+| 参数         | 必选 | 类型   | 说明                 |
+| ------------ | ---- | ------ | -------------------- |
+| username     | true | string | 用户名               |
+| password     | true | string | 用户密码             |
+| order_id     | true | string | 订单编号             |
+| check_in     | true | string | 修改后的入住日期     |
+| check_out    | true | string | 修改后的退房日期     |
+| new_room_type| true | string | 修改后的房型         |
+
+**返回字段:**
+| 返回字段 | 字段类型 | 说明                          |
+| -------- | -------- | ----------------------------- |
+| code     | int      | 返回结果状态。0：失败；1：成功 |
+| msg      | string   | 返回信息                      |
+
+**返回示例:**
+```json
+{
+    "code": 1,
+    "msg": "订单更改成功"
+}
+```
+
+```json
+{
+    "code": 0,
+    "msg": "订单更改失败"
+}
+```
+
+### 给服务员使用的订单更改接口
+
+服务员更改订单
+
+**URL:**
+> [/update_order_by_staff]
+
+**接口示例:**
+```
+GET http://localhost:8888/update_order_by_staff?username=staff123&password=staffpwd&order_id=RO123456789&check_in=2024-06-01&check_out=2024-06-10&new_room_type=双人房
+```
+
+**请求参数:**
+| 参数         | 必选 | 类型   | 说明                 |
+| ------------ | ---- | ------ | -------------------- |
+| username     | true | string | 服务人员用户名       |
+| password     | true | string | 服务人员密码         |
+| order_id     | true | string | 订单编号             |
+| check_in     | true | string | 修改后的入住日期     |
+| check_out    | true | string | 修改后的退房日期     |
+| new_room_type| true | string | 修改后的房型         |
+
+**返回字段:**
+| 返回字段 | 字段类型 | 说明                          |
+| -------- | -------- | ----------------------------- |
+| code     | int      | 返回结果状态。0：失败；1：成功 |
+| msg      | string   | 返回信息                      |
+
+**返回示例:**
+```json
+{
+    "code": 1,
+    "msg": "订单更改成功"
+}
+```
+
+```json
+{
+    "code": 0,
+    "msg": "订单更改失败"
+}
+```
+
+### 给服务员使用的入住后退房时间修改接口 //完成
+
+服务员修改入住后退房时间
+
+**URL:**
+> [/update_checkout_time]
+
+**接口示例:**
+```
+GET http://localhost:8888/update_checkout_time?username=staff123&password=staffpwd&order_id=RO123456789&new_checkout_date=2024-06-10
+```
+
+**请求参数:**
+| 参数             | 必选 | 类型   | 说明               |
+| ---------------- | ---- | ------ | ------------------ |
+| username         | true | string | 服务人员用户名     |
+| password         | true | string | 服务人员密码       |
+| order_id         | true | string | 订单编号           |
+| new_checkout_date| true | string | 修改后的退房日期   |
+
+**返回字段:**
+| 返回字段 | 字段类型 | 说明                          |
+| -------- | -------- | ----------------------------- |
+| code     | int      | 返回结果状态。0：失败；1：成功 |
+| msg      | string   | 返回信息                      |
+
+**返回示例:**
+```json
+{
+    "code": 1,
+    "msg": "退房时间修改成功"
+}
+```
+
+```json
+{
+    "code": 0,
+    "msg": "退房时间修改失败"
+}
+```
+
+### 给服务员使用的换房接口 //完成
+
+服务员换房操作
+
+**URL:**
+> [/change_room]
+
+**接口示例:**
+```
+GET http://localhost:8888/change_room?username=staff123&password=staffpwd&order_id=RO123456789&new_room_id=R5678
+```
+
+**请求参数:**
+| 参数         | 必选 | 类型   | 说明                 |
+| ------------ | ---- | ------ | -------------------- |
+| username     | true | string | 服务人员用户名       |
+| password     | true | string | 服务人员密码         |
+| order_id     | true | string | 订单编号             |
+| new_room_id  | true | string | 新的房间编号         |
+
+**返回字段:**
+| 返回字段 | 字段类型 | 说明                          |
+| -------- | -------- | ----------------------------- |
+| code     | int      | 返回结果状态。0：失败；1：成功 |
+| msg      | string   | 返回信息                      |
+
+**返回示例:**
+```json
+{
+    "code": 1,
+    "msg": "换房成功"
+}
+```
+
+```json
+{
+    "code": 0,
+    "msg": "换房失败"
+}
+``` //
