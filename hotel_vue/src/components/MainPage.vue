@@ -8,21 +8,21 @@ import icon2 from '../../static/mainPage/icon/2.png'
 import icon3 from '../../static/mainPage/icon/3.png'
 import icon4 from '../../static/mainPage/icon/4.png'
 </script>
-
+style="width: 100%;"
 <template>
   <div>
-    <el-carousel indicator-position="outside" height="580px">
-      <el-carousel-item >
-        <el-image :src="jpg1" ></el-image>
+    <el-carousel indicator-position="outside" height="580px" style="width: 100%;">
+      <el-carousel-item  >
+        <el-image :src="jpg1" style="width: 100%;"></el-image>
       </el-carousel-item>
       <el-carousel-item >
-        <el-image :src="jpg2"></el-image>
+        <el-image :src="jpg2" style="width: 100%;"></el-image>
       </el-carousel-item>
       <el-carousel-item >
-        <el-image :src="jpg3"></el-image>
+        <el-image :src="jpg3" style="width: 100%;"></el-image>
       </el-carousel-item>
       <el-carousel-item >
-        <el-image :src="jpg4" style="scale: 1.245"></el-image>
+        <el-image :src="jpg4" style="width: 100%;"></el-image>
       </el-carousel-item>
     </el-carousel>
     <div   style="width: 100%;background: url('../../static/mainPage/website.png');height: 500px;background-repeat: no-repeat;background-size: 100% 100%;" >
